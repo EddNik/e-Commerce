@@ -1,22 +1,32 @@
 // Функції, які передаються колбеками в addEventListners
 
-import { getProductsEndpoint } from './products-api';
 import {
-  pageState,
-  CATEGORY,
-  LIMIT_SKIP,
-  CATEGORY_LIST,
-  SEARCH,
-} from './constants';
-import {
-  renderCategoriesList,
-  renderProducts,
-  renderCardProduct,
-} from './render-function';
-import { refs } from './refs';
+  fetchCategories,
+  fetchProducts,
+  fetchOneProduct,
+  fetchQueryProduct,
+  fetchCategoryProducts,
+} from './products-api';
 
-import { iziToastErrorMessage, clearGallery } from './helpers';
-import { openModal } from './modal';
+import {
+  renderCategories,
+  renderProducts,
+  renderCartProduct,
+} from './render-function';
+
+import {
+  activeFirstBtn,
+  iziToastErrorMessage,
+  loadMoreVisibleStatus,
+  clearGallery,
+  showNotFoundProducts,
+} from './helpers';
+
+import { PAGE_SIZE } from './constants';
+import { refs } from './refs';
+import { openModal, product } from './modal';
+
+import { setLocalStorage, getLocalStorage } from './storage';
 
 export async function loadHomePage() {
   pageState.currentPage = 1;
