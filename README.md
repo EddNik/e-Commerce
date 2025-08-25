@@ -1,4 +1,53 @@
-## API ендпоінти:
+🛒 Online Store (Educational Mini-Project)
+
+📌 **Description**
+
+This is a JavaScript practice project — an online store that fetches products
+from an API and supports cart and wishlist functionality.
+
+✅ **Responsive Design:**
+
+Optimized for tablets and desktops. No mobile version is available.
+
+✨ **Features**
+
+    - Home Page
+        - Displays products (12 per page)
+        - "Load more" button to fetch additional products
+        - Category-based filtering - Search by keywords
+
+    - Product Card (Modal Window)
+        - Product image and description
+        - Buttons:
+            - Buy — A success message appears
+            - Add to wishlist / Remove from wishlist
+            - Add to cart / Remove from cart
+
+    - Cart Page
+        - Displays all added products
+        - Summary with total price and quantity
+        - Discount message
+        - Buy button
+
+    - Wishlist Page
+        - Displays saved products
+        - Supports modal window with product details
+
+🔧 **Technologies**
+
+- JavaScript
+- API for product data
+- HTML/CSS (provided by mentor)
+
+🧾 **Libraries**
+
+- [axios](https://www.npmjs.com/package/axios)
+- [iziToast](https://cdnjs.com/libraries/izitoast)
+
+
+
+
+## API endpoints:
 
     - https://dummyjson.com/docs/products - документація бекенду, розділ продукти
     - https://dummyjson.com/products?limit=10&skip=10 - отримати всі продукти з пагінацією
@@ -7,28 +56,23 @@
     - https://dummyjson.com/products/category-list - отримати список категорій продуктів
     - https://dummyjson.com/products/category/smartphones - отримати продукти по категорії
 
-## Опис функціоналу:
+## Functionality Description
 
-При завантаженні основної сторінки в списку ul.categories рендериться список категорій продуктів, отриманих з бекенду. В списку ul.products рендериться список продуктів, отриманих з бекенда (з пагінацією 12 товарів). Після списку продуктів зʼявляється кнопка loadMore для завантаження наступної порції продуктів. Якщо на бекенді не залишилось продуктів, кнопка loadMore приховується і зʼявляється повідомлення. Для повідомлень використовуємо бібліотеку iziToast.
+When the main page loads, a list of product categories obtained from the backend is rendered in the `ul.categories` list. A list of products obtained from the backend (with pagination of 12 items) is rendered in the `ul.products` list. After the product list, a `loadMore` button appears to load the next batch of products. If there are no more products left on the backend, the `loadMore` button is hidden and a message appears. We use the iziToast library for messages.
 
+When clicking on a category button, a request is made to the backend for products in the selected category, with pagination of 12 products per page. The selected category is highlighted as active.
 
-При кліку по кнопці з категорією іде запит на бекенд за товарами по обраній категорії, пагінація 12 товарів на сторінку. Обрана категорія виділяється активною.
+When clicking on a product card, a request is made to the backend for that product by ID, a modal window opens and the product is rendered in the modal window. The modal window also renders "Add to Wishlist" and "Add to Cart" buttons. The modal window should close when clicking the close button, clicking the backdrop, or pressing the ESC key. The keyboard listener for closing the modal window should be set when opening the modal window and removed when closing.
 
+When clicking the "Add to Wishlist" and "Add to Cart" buttons, the product is added to Wishlist or Cart respectively and saved in localStorage. The buttons change their text content to "Remove from Wishlist" and "Remove from Cart". The navigation displays the number of products added to Wishlist and Cart. When opening the modal window, you need to check if the product exists in wishlist and cart and if present, change the button text content to "Remove from Wishlist" and "Remove from Cart" respectively.
 
-При кліку в картку продукту виконується запит на бекенд за цим продуктом по ID, відкривається модальне вікно і продукт рендериться у модальному вікні. Також в модальному вікні рендеряться кнопки Add to Wishlist та Add to Cart. Модальне вікно має закриватись по кліку в кнопку закриття, по кліку в бекдроп і при натисканні на кнопку ESC. Слухач клавіатури для закриття модального вікна має ставитись при відкритті модального вікна і зніматись при закритті.
+When navigating to the Wishlist page, products added to the wishlist are rendered. You need to add functionality for opening a product in a modal window and removing it from the wishlist.
 
+When navigating to the Cart page, products that were added to the Cart are displayed, as well as general information - the number of items in the cart, total cost, and a payment button.
 
-При кліку в кнопки Add to Wishlist та Add to Cart продукт додається до Wishlist або Card відповідно і зберігається в localStorage. Кнопки міняють текстовий контент на Remove from Wishlist та Remove from Cart. В навігації відображається кількість доданих продуктів до Wishlist та Card. При відкритті модального вікна потрібно перевіряти наявність продукту в wishlist та cart і при наявності продукт змінювати текстовий контент кнопки на Remove from Wishlist та Remove from Cart відповідно.
+### Project Goals
 
-
-При переході на сторінку Wishlist рендеряться продукти додані у wishlist. Потрібно додати функціонал відкриття продукту в модальному вікні та видалення з wishlist.
-
-
-При переході на сторінку Cart відмальовуються продукти, які були додані у Cart, а також загальна інформація - кількість товарів у кошику, загальна вартість та кнопка оплати.    
-
-
-### Ціль проекту
-    - Практичний досвід роботи із Fetch API та бібліотекою axios.
-    - Навички структуризації коду за модульним принципом.
-    - Упевненість у використанні DOM-маніпуляцій для створення інтерактивних елементів.
-    - Досвід роботи з localStorage
+- Practical experience working with Fetch API and axios library
+- Skills in structuring code using modular principles
+- Confidence in using DOM manipulations to create interactive elements
+- Experience working with localStorage
