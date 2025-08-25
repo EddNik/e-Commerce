@@ -159,7 +159,8 @@
   margin-top: 1.5rem;
 }
 
-.modal-product__btn {
+.modal-product__btn,
+.modal-product__buy-btn {
   flex: 1;
   display: flex;
   align-items: center;
