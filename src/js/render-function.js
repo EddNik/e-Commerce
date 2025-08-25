@@ -34,10 +34,11 @@ export function renderProducts(products) {
  </li>`
     )
     .join('');
-  refs.productsList.insertAdjacentHTML('beforeend', markup);
+  refs.productList.insertAdjacentHTML('beforeend', markup);
 }
 
-export function renderCardProduct({
+export function renderCartProduct({
+  id,
   thumbnail,
   title,
   shippingInformation,
@@ -47,7 +48,7 @@ export function renderCardProduct({
   returnPolicy,
 }) {
   const markup = `<img class="modal-product__img" src="${thumbnail}" alt="${title}" />
-      <div class="modal-product__content">
+      <div class="modal-product__content" data-id="${id}">
         <p class="modal-product__title">${title}</p>
         <ul class="modal-product__tags">${tags
           .map(tag => `<li>${tag}</li>`)
