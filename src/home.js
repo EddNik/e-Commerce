@@ -29,13 +29,16 @@ refs.productList.addEventListener('click', event => {
   getOneProduct(event);
 });
 
-refs.formSearch.addEventListener('submit', async event => {
+refs.formSearch.addEventListener('submit', event => {
   event.preventDefault();
   const query = event.target.searchValue.value.trim();
   getQueryProduct(query);
 });
 
-refs.clearBtn.addEventListener('click', onClearBtn);
+refs.clearBtn.addEventListener('click', event => {
+  event.preventDefault();
+  onClearBtn();
+});
 
 updateCartCount();
 updateWishCount();
