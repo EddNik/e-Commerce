@@ -15,10 +15,10 @@ export const iziToastOption = {
   position: 'topCenter',
 };
 
-export function activeFirstBtn() {
-  const firstBtn = document.querySelector('.categories__btn');
-  if (firstBtn) {
-    firstBtn.classList.add('categories__btn--active');
+export function activeCategoryBtn() {
+  const categoryBtn = document.querySelector('.categories__btn');
+  if (categoryBtn) {
+    categoryBtn.classList.add('categories__btn--active');
   }
 }
 

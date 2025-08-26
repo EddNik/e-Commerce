@@ -13,20 +13,26 @@ product.getWishList();
 
 const { wishList } = product;
 
-const response = wishList.map(id => fetchOneProduct(id));
-// console.log(response);
+getWishProducts();
 
-selectedProducts(response);
+// async function name() {
+//     const response = wishList.map(id => await fetchOneProduct(id));
+// console.log(response);
+// }
+const promiseArray = wishList.map(id => fetchOneProduct(id));
+// console.log(promiseArray);
+
+selectedProducts(promiseArray);
 
 function removeProductFromListPage(productID) {
-  const productCard = document.querySelector(
+  const productCart = document.querySelector(
     `.products__item[data-id="${productID}"]`
   );
-  if (productCard) {
-    productCard.remove();
+  if (productCart) {
+    productCart.remove();
   }
 }
 
 const isWishlistPage = window.location.pathname.includes('/wishlist');
 
-console.log(window.location);
+// console.log(window.location);

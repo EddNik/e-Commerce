@@ -1,21 +1,42 @@
 //Логіка сторінки Home
 
 import {
-  getCategories,
   getAllProducts,
   getQueryProduct,
   onClearBtn,
   getCategoryProducts,
+  getOneProduct,
 } from './js/handlers';
+
 import { refs } from './js/refs';
 
-import { updateCartCount, updateWishCount } from './js/modal';
+import { updateCartCount, updateWishCount, product } from './js/modal';
 
-// const productID = getCartProduct();
-getCategories();
-getAllProducts();
-getQueryProduct();
-onClearBtn();
+document.addEventListener('DOMContentLoaded', getAllProducts);
+
+refs.categoriesList.addEventListener('click', async event => {
+  if (event.target.nodeName !== 'BUTTON') {
+    return;
+  }
+  product.categoryName = event.target.textContent;
+  getCategoryProducts();
+});
+
+refs.productList.addEventListener('click', event => {
+  if (event.target.nodeName === 'UL') {
+    return;
+  }
+  getOneProduct(event);
+});
+
+refs.formSearch.addEventListener('submit', async event => {
+  event.preventDefault();
+  const query = event.target.searchValue.value.trim();
+  getQueryProduct(query);
+});
+
+refs.clearBtn.addEventListener('click', onClearBtn);
+
 updateCartCount();
 updateWishCount();
 getCategoryProducts();

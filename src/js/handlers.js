@@ -15,7 +15,7 @@ import {
 } from './render-function';
 
 import {
-  activeFirstBtn,
+  activeCategoryBtn,
   iziToastErrorMessage,
   loadMoreVisibleStatus,
   clearGallery,
@@ -38,13 +38,14 @@ export async function getCategories() {
   try {
     const data = await fetchCategories();
     renderCategories(['All', ...data]);
-    activeFirstBtn();
+    activeCategoryBtn();
   } catch (error) {
     iziToastErrorMessage({ message: 'Try again later!' });
   }
 }
 
 export async function getAllProducts() {
+  getCategories();
   try {
     clearGallery();
     const data = await fetchProducts(currentPage);
@@ -68,7 +69,6 @@ export async function getAllProducts() {
 }
 
 export async function loadMoreProducts() {
-  console.log(product.categoryName);
   currentPage += 1;
   let data;
   try {
@@ -81,9 +81,6 @@ export async function loadMoreProducts() {
     } else {
       data = await fetchCategoryProducts(product.categoryName, currentPage);
     }
-    console.log(data);
-
-    //
 
     const { products } = data;
     renderProducts(products);
@@ -95,55 +92,29 @@ export async function loadMoreProducts() {
   }
 }
 
-export function getCategoryProducts() {
+export async function getCategoryProducts() {
   let data;
+  currentPage = 1;
 
-  refs.categoriesList.addEventListener('click', async event => {
-    currentPage = 1;
-    if (event.target.nodeName !== 'BUTTON') {
-      return;
+  try {
+    clearGallery();
+    if (product.categoryName === 'All' || product.categoryName === '') {
+      data = await fetchProducts(currentPage);
+    } else {
+      data = await fetchCategoryProducts(product.categoryName, currentPage);
     }
-
-    product.categoryName = event.target.textContent;
-
-    // getCategoryProducts(product.categoryName);
-    //   changeActiveButton(event);
-
-    console.log(product.categoryName);
-
-    try {
-      clearGallery();
-      if (product.categoryName === 'All' || product.categoryName === '') {
-        data = await fetchProducts(currentPage);
-      } else {
-        data = await fetchCategoryProducts(product.categoryName, currentPage);
-      }
-
-      console.log(data);
-      const { products } = data;
-      console.log(products);
-      console.log(currentPage);
-
-      if (Array.isArray(products) && products.length === 0) {
-        refs.notFoundDiv.classList.add('not-found--visible');
-      }
-      renderProducts(products);
-
-      refs.productList.addEventListener('click', event => {
-        // користувач клікнув міжкартками товару
-        if (event.target.nodeName === 'UL') {
-          return;
-        }
-        getOneProduct(event);
-      });
-
-      const totalCategoryProducts = data.total;
-      totalPages = Math.ceil(totalCategoryProducts / PAGE_SIZE);
-      loadMoreVisibleStatus(currentPage, totalPages);
-    } catch (error) {
-      iziToastErrorMessage(error);
+    const { products } = data;
+    if (Array.isArray(products) && products.length === 0) {
+      refs.notFoundDiv.classList.add('not-found--visible');
     }
-  });
+    renderProducts(products);
+
+    const totalCategoryProducts = data.total;
+    totalPages = Math.ceil(totalCategoryProducts / PAGE_SIZE);
+    loadMoreVisibleStatus(currentPage, totalPages);
+  } catch (error) {
+    iziToastErrorMessage(error);
+  }
 }
 
 export async function getOneProduct(event) {
@@ -161,54 +132,50 @@ export async function getOneProduct(event) {
   }
 }
 
-export function getQueryProduct() {
-  refs.formSearch.addEventListener('submit', async event => {
-    event.preventDefault();
+// refs.formSearch.addEventListener('submit', async event => {
+//   event.preventDefault();
 
-    // window.location.href = './index.html';
-    query = event.target.searchValue.value.trim();
-    try {
-      if (!query) {
-        refs.formSearch.reset();
-        throw new Error('Sorry, this name images is empty. Please try again!');
-      }
+// window.location.href = './index.html';
 
-      if (query !== previousQuery) {
-        currentPage = 1;
-        previousQuery = query;
-      }
-
-      clearGallery();
-      const data = await fetchQueryProduct(query, currentPage);
-      const totalProducts = data.total;
-      totalPages = Math.ceil(totalProducts / PAGE_SIZE);
-
-      if (totalProducts === 0) {
-        showNotFoundProducts();
-      } else {
-        renderProducts(data.products);
-        loadMoreVisibleStatus(currentPage, totalPages);
-      }
-    } catch (error) {
-      iziToastErrorMessage(error);
+export async function getQueryProduct(query) {
+  try {
+    if (!query) {
+      refs.formSearch.reset();
+      throw new Error('Sorry, this name images is empty. Please try again!');
     }
-  });
+
+    if (query !== previousQuery) {
+      currentPage = 1;
+      previousQuery = query;
+    }
+
+    clearGallery();
+    const data = await fetchQueryProduct(query, currentPage);
+    const totalProducts = data.total;
+    totalPages = Math.ceil(totalProducts / PAGE_SIZE);
+
+    if (totalProducts === 0) {
+      showNotFoundProducts();
+    } else {
+      renderProducts(data.products);
+      loadMoreVisibleStatus(currentPage, totalPages);
+    }
+  } catch (error) {
+    iziToastErrorMessage(error);
+  }
 }
 
 export function onClearBtn() {
-  refs.clearBtn.addEventListener('click', event => {
-    event.preventDefault();
-    inputContext.value = '';
-    query = '';
-    getAllProducts();
-  });
+  inputContext.value = '';
+  query = '';
+  getAllProducts();
 }
 
-export async function selectedProducts(response) {
+export async function selectedProducts(promises) {
   try {
-    const selectedProducts = await Promise.all(response);
-    console.log(selectedProducts);
-    renderProducts(selectedProducts);
+    const selectedProductsObj = await Promise.all(promises);
+    console.log(selectedProductsObj);
+    renderProducts(selectedProductsObj);
   } catch (error) {
     iziToastErrorMessage(error);
   }
@@ -220,4 +187,22 @@ export async function selectedProducts(response) {
     }
     getOneProduct(event);
   });
+}
+
+export async function addOneProductToList(productID) {
+  try {
+    const data = await fetchOneProduct(`${productID}`);
+
+    const markup = renderCartProduct(data);
+
+    console.log(markup);
+
+    if (refs && refs.productList) {
+      refs.productList.insertAdjacentHTML('afterbegin', markup);
+    } else {
+      console.error('Products list container not found');
+    }
+  } catch (error) {
+    console.log(error);
+  }
 }

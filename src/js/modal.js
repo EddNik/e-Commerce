@@ -8,6 +8,8 @@ import { refs } from './refs';
 import { getLocalStorage, setLocalStorage } from './storage';
 import { KEY } from './constants';
 
+import { addOneProductToList } from './handlers';
+
 export const product = {
   id: null,
   categoryName: '',
@@ -132,23 +134,26 @@ function selectProduct() {
     updateCartCount();
   });
 
-  refs.wishBtn.addEventListener('click', event => {
+  refs.wishBtn.addEventListener('click', async event => {
     if (!wishList.includes(id)) {
       wishList.push(id);
       setLocalStorage(KEY.WISH_KEY, wishList);
       event.target.textContent = 'Remove from Wishlist';
+      console.log(id);
+      // addOneProductToList(id);
     } else {
-      const productIndex = cartList.indexOf(id);
+      const productIndex = wishList.indexOf(id);
       wishList.splice(productIndex, 1);
       setLocalStorage(KEY.WISH_KEY, wishList);
+      // console.log(wishList);
       event.target.textContent = 'Add to Wishlist';
 
       if (isWishlistPage) {
-        const productCard = document.querySelector(
+        const productCart = document.querySelector(
           `.products__item[data-id="${id}"]`
         );
-        if (productCard) {
-          productCard.remove();
+        if (productCart) {
+          productCart.remove();
         }
       }
     }
