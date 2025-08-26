@@ -1,2 +1,2 @@
-import{u as s,a as i,p as o}from"./assets/modal-B6qztZIf.js";import{f as a,s as e}from"./assets/handlers-_l0fhY9M.js";import"./assets/vendor-4yCzdkXl.js";s();i();o.getWishList();const{wishList:n}=o,c=n.map(t=>a(t));e(c);window.location.pathname.includes("/wishlist");console.log(window.location);
+import{u as o,a,p as t,f as i,s as e}from"./assets/modal-DLhXrl-q.js";import"./assets/vendor-4yCzdkXl.js";o();a();t.getWishList();const{wishList:r}=t;getWishProducts();const c=r.map(s=>i(s));e(c);window.location.pathname.includes("/wishlist");
 //# sourceMappingURL=wishlist.js.map
