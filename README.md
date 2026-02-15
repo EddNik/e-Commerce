@@ -1,10 +1,52 @@
-🛒 Online Store (Educational Mini-Project)
+🛒 # Vanilla JS E-Commerce Project
 
-📌 **Description**
+This is a frontend e-commerce application built with **Vanilla JavaScript**, **HTML**, and **CSS**. It interacts with the [DummyJSON API](https://dummyjson.com/docs/products) to display products, categories, and manage a shopping cart and wishlist.
 
-This is a JavaScript practice project — an online store that fetches products
-from an API and supports cart and wishlist functionality.
+## 🚀 Features
 
+* **Product Catalog**: Fetch and display products from an external API.
+* **Categories**: Filter products by categories (e.g., smartphones, laptops).
+* **Search**: Search functionality to find specific products.
+* **Product Details**: View detailed information about a product in a modal window.
+* **Shopping Cart**: Add products to the cart, view cart items, and manage quantities.
+* **Wishlist**: Save favorite products to a wishlist for later.
+* **Local Storage**: Persist Cart and Wishlist data so it remains available after page refreshes.
+* **Responsive Design**: Adapted for different screen sizes using CSS media queries.
+
+## 🛠 Tech Stack
+
+* **Core**: HTML5, CSS3, JavaScript (ES6+ Modules)
+* **Styling**: CSS Variables, Flexbox/Grid, BEM naming convention
+* **API**: [DummyJSON](https://dummyjson.com/) (Products & Categories)
+* **Build Tool**: Parcel (Recommended/Assumed based on structure)
+* **HTTP Client**: Axios (or native Fetch API)
+* **Utils**: `basiclightbox` (likely for modals), `iziToast` (likely for notifications)
+
+## 📂 Project Structure
+
+```text
+src/
+├── css/                # Stylesheets (modularized)
+│   ├── base.css        # Base styles and variables
+│   ├── header.css      # Header styles
+│   ├── products.css    # Product grid styles
+│   ├── cart.css        # Shopping cart styles
+│   ├── modal.css       # Modal window styles
+│   └── ...
+├── js/                 # JavaScript logic
+│   ├── products-api.js # API service functions (fetch products, categories)
+│   ├── handlers.js     # Event handlers (clicks, form submits)
+│   ├── render-function.js # HTML markup generation functions
+│   ├── storage.js      # LocalStorage helpers
+│   ├── refs.js         # DOM element references
+│   └── ...
+├── partials/           # HTML partials (header, modal, etc.)
+├── img/                # Images and SVG icons
+├── index.html          # Main entry point (Home page)
+├── cart.html           # Shopping Cart page
+├── wishlist.html       # Wishlist page
+└── home.js             # Main script for the home page
+```
 ✅ **Responsive Design:**
 
 Optimized for tablets and desktops. No mobile version is available.
