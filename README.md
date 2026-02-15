@@ -1,4 +1,4 @@
-🛒 # Vanilla JS E-Commerce Project
+🛒  Vanilla JS E-Commerce Project
 
 This is a frontend e-commerce application built with **Vanilla JavaScript**, **HTML**, and **CSS**. It interacts with the [DummyJSON API](https://dummyjson.com/docs/products) to display products, categories, and manage a shopping cart and wishlist.
 
